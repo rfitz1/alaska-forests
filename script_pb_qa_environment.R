@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("/Users/RyanFitzsimmons/Desktop/alaska_project/materials/environment")
+
 
 master=read.table("young_sl.txt", header=T,sep="\t")
 summary(master)
@@ -25,8 +25,11 @@ str(master.qa)
 master.qa
 summary(master.qa)
 summary(master.qanon)
-
-
+# grid
+###Winslow added!!! you can add this downbelow also to write out a grid for aspen too. 
+id=matrix(1:52,ncol=26,byrow=T) id
+write.table(id,file="grid.txt",col.names=T,row.names=F,quote=F)
+########
 ##Writing the Paper Birch Environment File##
 
 x=c(0:24)
@@ -43,7 +46,7 @@ for(i in 1:dim(master.pb)[1])
 		x=xi[i],
 		y=yi[i],
 		model.climate.tableName=master.pb$siteid.x[i],
-		model.site.availableNitrogen=55,
+		model.site.availableNitrogen=55,       #####################Let's set this to 25 to start. I calculated this based on estimates of Nitrogen pools in Melvin et al. 2015. I took figure 5, multiplied 100000(meters squared per ha) and divided by 100,000 (grams in kg).
 		model.site.soilDepth=30,
 		model.site.pctSand=34,
 		model.site.pctSilt=33,
