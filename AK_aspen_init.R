@@ -4,7 +4,7 @@ env=read.table("AK_qa_environment.txt",header=T,sep="")
 summary(stands)
 str(stands)
 summary(stands)
-
+summary(env)
 stands$total.dens=stands$dens.PICGLA+stands$dens.PICMAR+stands$dens.BETNEO+stands$dens.POPTRE+stands$dens.POPBAL+
 stands$count.sap.PICMAR+stands$count.sap.PICGLA+stands$count.sap.BETNEO+stands$count.sap.POPTRE
 stands$prop.POPTRE=(stands$dens.POPTRE+stands$count.sap.POPTRE)/stands$total.dens
@@ -75,6 +75,8 @@ summary(heights)
 sapinit=cbind.data.frame(
 	stand_id=heights$id,
 	species="Potr",
+########The name here needs to match the name in the species parameter database.
+
 	count=round((heights$count/25), digits=2),
 	height_from=round((heights$gamma/100)-0.1,digits=2),
 	height_to=round((heights$gamma/100)+0.1,digits=2),
@@ -88,7 +90,7 @@ head(sapinit)
 write.table(sapinit,file="Potr_stand_model_init.txt",col.names=T,row.names=F,sep=";")
 
 
-####Aspen>4m####
+####Aspen>4m#### ##Actually DBH is in mm!
 
 stands=read.table("young_sl.txt",header=T,sep="\t")
 trees=read.table("bs_aspen_twenty.txt",header=T,sep="\t")
@@ -176,6 +178,7 @@ summary(DBH)
 sapinit=cbind.data.frame(
 	stand_id=DBH$id,
 	species="Potr",
+### See above
 	count=round((DBH$count/5), digits=2),
 	DBH_from=round((DBH$gamma/10)-0.1,digits=2),
 	DBH_to=round((DBH$gamma/10)+0.1,digits=2),
