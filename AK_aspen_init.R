@@ -1,6 +1,6 @@
 stands=read.table("young_sl.txt",header=T,sep="\t")
 trees=read.table("bs_aspen_twenty.txt",header=T,sep="\t")
-env=read.table("AK_qa_environment.txt",header=T,sep="\t")
+env=read.table("AK_qa_environment.txt",header=T,sep="")
 summary(stands)
 str(stands)
 summary(stands)
@@ -74,7 +74,7 @@ summary(heights)
 
 sapinit=cbind.data.frame(
 	stand_id=heights$id,
-	species="Aspen",
+	species="Potr",
 	count=round((heights$count/25), digits=2),
 	height_from=round((heights$gamma/100)-0.1,digits=2),
 	height_to=round((heights$gamma/100)+0.1,digits=2),
@@ -85,14 +85,14 @@ summary(sapinit)
 str(sapinit)
 head(sapinit)
 
-write.table(sapinit,file="qa_stand_model_init.txt",col.names=T,row.names=F,sep=";")
+write.table(sapinit,file="Potr_stand_model_init.txt",col.names=T,row.names=F,sep=";")
 
 
 ####Aspen>4m####
 
 stands=read.table("young_sl.txt",header=T,sep="\t")
 trees=read.table("bs_aspen_twenty.txt",header=T,sep="\t")
-env=read.table("AK_qa_environment.txt",header=T,sep="\t")
+env=read.table("AK_qa_environment.txt",header=T,sep="")
 summary(stands)
 str(stands)
 summary(stands)
@@ -175,10 +175,10 @@ summary(DBH)
 
 sapinit=cbind.data.frame(
 	stand_id=DBH$id,
-	species="Aspen",
+	species="Potr",
 	count=round((DBH$count/5), digits=2),
-	DBH_from=round((DBH$gamma)-0.1,digits=2),
-	DBH_to=round((DBH$gamma)+0.1,digits=2),
+	DBH_from=round((DBH$gamma/10)-0.1,digits=2),
+	DBH_to=round((DBH$gamma/10)+0.1,digits=2),
 	age=20
 )
 
@@ -186,4 +186,4 @@ summary(sapinit)
 str(sapinit)
 head(sapinit)
 
-write.table(sapinit,file="qa>4_stand_model_init.txt",col.names=T,row.names=F,sep=";")
+write.table(sapinit,file="Potr4_stand_model_init.txt",col.names=T,row.names=F,sep=";")
