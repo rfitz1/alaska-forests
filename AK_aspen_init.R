@@ -1,10 +1,10 @@
 stands=read.table("young_sl.txt",header=T,sep="\t")
 trees=read.table("bs_aspen_twenty.txt",header=T,sep="\t")
-env=read.table("AK_qa_environment.txt",header=T,sep="")
+env=read.table("AK_qa_environment.txt",header=T,sep="\t")
 summary(stands)
 str(stands)
 summary(stands)
-summary(env)
+
 stands$total.dens=stands$dens.PICGLA+stands$dens.PICMAR+stands$dens.BETNEO+stands$dens.POPTRE+stands$dens.POPBAL+
 stands$count.sap.PICMAR+stands$count.sap.PICGLA+stands$count.sap.BETNEO+stands$count.sap.POPTRE
 stands$prop.POPTRE=(stands$dens.POPTRE+stands$count.sap.POPTRE)/stands$total.dens
@@ -74,9 +74,7 @@ summary(heights)
 
 sapinit=cbind.data.frame(
 	stand_id=heights$id,
-	species="Potr",
-########The name here needs to match the name in the species parameter database.
-
+	species="Aspen",
 	count=round((heights$count/25), digits=2),
 	height_from=round((heights$gamma/100)-0.1,digits=2),
 	height_to=round((heights$gamma/100)+0.1,digits=2),
@@ -87,14 +85,14 @@ summary(sapinit)
 str(sapinit)
 head(sapinit)
 
-write.table(sapinit,file="Potr_stand_model_init.txt",col.names=T,row.names=F,sep=";")
+write.table(sapinit,file="potr_stand_model_init.txt",col.names=T,row.names=F,sep=";")
 
 
-####Aspen>4m#### ##Actually DBH is in mm!
+####Aspen>4m####
 
 stands=read.table("young_sl.txt",header=T,sep="\t")
 trees=read.table("bs_aspen_twenty.txt",header=T,sep="\t")
-env=read.table("AK_qa_environment.txt",header=T,sep="")
+env=read.table("AK_qa_environment.txt",header=T,sep="\t")
 summary(stands)
 str(stands)
 summary(stands)
@@ -173,15 +171,28 @@ DBH=cbind(id,gamma)
 DBH=cbind(DBH,count)
 summary(DBH)
 
+###Idea for creating heights for the trees###
+reg <- lm(trees.ta4$Height ~ trees.ta4$DBH, data=trees.ta4)
+coeff=coefficients(reg)
+eq = paste("y = ", round(coeff[2],1), "*x", round(coeff[1],1))
+plot(trees.ta4$Height ~ trees.ta4$DBH, main=eq)
+abline(reg, col="blue")
+
+hd=1.8*DBH$gamma + 398.7
+summary(hd)
+DBH=cbind(DBH,hd)
+summary(DBH)
+str(DBH)
+
 ##Writing the text file##
 
 sapinit=cbind.data.frame(
 	stand_id=DBH$id,
-	species="Potr",
-### See above
+	species="Aspen",
 	count=round((DBH$count/5), digits=2),
 	DBH_from=round((DBH$gamma/10)-0.1,digits=2),
 	DBH_to=round((DBH$gamma/10)+0.1,digits=2),
+	hd=round((DBH$hd/(DBH$gamma/10)),digits=2),
 	age=20
 )
 
@@ -189,4 +200,4 @@ summary(sapinit)
 str(sapinit)
 head(sapinit)
 
-write.table(sapinit,file="Potr4_stand_model_init.txt",col.names=T,row.names=F,sep=";")
+write.table(sapinit,file="potr4_stand_model_init.txt",col.names=T,row.names=F,sep=";")
