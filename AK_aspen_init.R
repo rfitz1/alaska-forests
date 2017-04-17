@@ -170,16 +170,22 @@ str(gamma)
 DBH=cbind(id,gamma)
 DBH=cbind(DBH,count)
 summary(DBH)
+str(DBH)
 
 ###Idea for creating heights for the trees###
+
+trees.ta4$DBH=trees.ta4$DBH/10
 reg <- lm(log(trees.ta4$Height) ~ log(trees.ta4$DBH), data=trees.ta4)
 summary(reg)
 coeff=coefficients(reg)
 eq = paste("y = ", round(coeff[2],1), "*x", round(coeff[1],1))
-plot(log(trees.ta4$Height) ~ log(trees.ta4$DBH), main=eq)
+plot((log(trees.ta4$Height)) ~ (log(trees.ta4$DBH)), main=eq)
 abline(reg, col="blue")
 
-hd=1.8*DBH$gamma + 398.7
+ht=(0.1*DBH$gamma + 6.6)
+summary(loghd)
+e=2.71828
+hd=e^(loghd)
 summary(hd)
 DBH=cbind(DBH,hd)
 summary(DBH)
@@ -193,7 +199,7 @@ sapinit=cbind.data.frame(
 	count=round((DBH$count/5), digits=2),
 	DBH_from=round((DBH$gamma/10)-0.1,digits=2),
 	DBH_to=round((DBH$gamma/10)+0.1,digits=2),
-	hd=round((DBH$hd/(DBH$gamma/10)),digits=2),
+	hd=round((DBH$ht/(DBH$gamma/10)),digits=2),
 	age=20
 )
 
