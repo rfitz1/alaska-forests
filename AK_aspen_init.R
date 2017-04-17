@@ -172,10 +172,11 @@ DBH=cbind(DBH,count)
 summary(DBH)
 
 ###Idea for creating heights for the trees###
-reg <- lm(trees.ta4$Height ~ trees.ta4$DBH, data=trees.ta4)
+reg <- lm(log(trees.ta4$Height) ~ log(trees.ta4$DBH), data=trees.ta4)
+summary(reg)
 coeff=coefficients(reg)
 eq = paste("y = ", round(coeff[2],1), "*x", round(coeff[1],1))
-plot(trees.ta4$Height ~ trees.ta4$DBH, main=eq)
+plot(log(trees.ta4$Height) ~ log(trees.ta4$DBH), main=eq)
 abline(reg, col="blue")
 
 hd=1.8*DBH$gamma + 398.7
