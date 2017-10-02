@@ -1,6 +1,6 @@
 stands=read.table("young_sl.txt",header=T,sep="\t")
 trees=read.table("bs_aspen_twenty.txt",header=T,sep="\t")
-env=read.table("AK_qa_environment.txt",header=T,sep="\t")
+env=read.table("AK_qa_environment.txt",header=T,sep="")
 summary(stands)
 str(stands)
 summary(stands)
@@ -151,6 +151,7 @@ id
 id=rep(id,each=5)
 id
 id=data.frame(id)
+summary(id)
 
 summary(stands.ta)
 count=data.frame(stands.ta$POPTRE.tdens)

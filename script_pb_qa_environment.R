@@ -4,6 +4,8 @@ rm(list=ls())
 master=read.table("young_sl.txt", header=T,sep="\t")
 summary(master)
 str(master)
+id=read.table("acf.txt", header=T, sep="")
+summary(id)
 
 master$total.dens=master$dens.PICGLA+master$dens.PICMAR+master$dens.BETNEO+master$dens.POPTRE+master$dens.POPBAL+master$count.sap.PICMAR+master$count.sap.PICGLA+master$count.sap.BETNEO+master$count.sap.POPTRE
 master$prop.BETNEO=(master$dens.BETNEO+master$count.sap.BETNEO)/master$total.dens
@@ -22,7 +24,7 @@ summary(master.pbnon)
 master.qa=subset(master,prop.POPTRE>.25&permafrost==0)
 master.qanon=subset(master,prop.POPTRE<0.3)
 str(master.qa)
-master.qa
+master.qa=cbind(id,master.qa)
 summary(master.qa)
 summary(master.qanon)
 # grid
@@ -45,8 +47,8 @@ for(i in 1:dim(master.pb)[1])
 		id=i,
 		x=xi[i],
 		y=yi[i],
-		model.climate.tableName=master.pb$siteid.x[i],
-		model.site.availableNitrogen=55,       #####################Let's set this to 25 to start. I calculated this based on estimates of Nitrogen pools in Melvin et al. 2015. I took figure 5, multiplied 100000(meters squared per ha) and divided by 100,000 (grams in kg).
+		model.climate.tableName=master.pb$id[i],
+		model.site.availableNitrogen=25,       #####################Let's set this to 25 to start. I calculated this based on estimates of Nitrogen pools in Melvin et al. 2015. I took figure 5, multiplied 100000(meters squared per ha) and divided by 100,000 (grams in kg).
 		model.site.soilDepth=30,
 		model.site.pctSand=34,
 		model.site.pctSilt=33,
@@ -75,7 +77,7 @@ for(i in 1:dim(master.qa)[1])
 		   id=i,
 		   x=xi[i],
 		   y=yi[i],
-		   model.climate.tableName=master.qa$siteid.x[i],
+		   model.climate.tableName=master.qa$id[i],
 		   model.site.availableNitrogen=55,
 		   model.site.soilDepth=30,
 		   model.site.pctSand=34,
