@@ -78,7 +78,7 @@ for(i in 1:dim(master.qa)[1])
 		   x=xi[i],
 		   y=yi[i],
 		   model.climate.tableName=master.qa$id[i],
-		   model.site.availableNitrogen=55,
+		   model.site.availableNitrogen=65,
 		   model.site.soilDepth=30,
 		   model.site.pctSand=34,
 		   model.site.pctSilt=33,
